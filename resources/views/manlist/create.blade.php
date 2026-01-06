@@ -1,7 +1,7 @@
 <x-layout>
     <h1 class="text-xl font-semibold text-white mb-5">Insert New Employee</h1>
 
-    <form action="{{ route('dashboard.store') }}" method="POST">
+    <form action="{{ route('manlist.store') }}" method="POST">
         @csrf
         <!-- EMPLOYEE DETAILS CARD -->
         <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-3 p-6 space-y-4">
@@ -13,7 +13,6 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5">
-
                 <!-- Employee Number -->
                 <div class="sm:cols-span-6 lg:col-span-4">
                     <label for="emp_number" class="block mb-1 font-medium text-green-500">Employee Number *</label>
@@ -104,7 +103,8 @@
 
                 <!-- Employee Classification -->
                 <div class="sm:cols-span-6 lg:col-span-4">
-                    <label for="emp_classification" class="block mb-1 font-medium text-green-500">Employee Classification *</label>
+                    <label for="emp_classification" class="block mb-1 font-medium text-green-500">Employee
+                        Classification *</label>
                     <select id="emp_classification" name="emp_classification" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Classification</option>
@@ -160,7 +160,8 @@
 
                 <!-- Temporary Workbase -->
                 <div class="sm:cols-span-6 lg:col-span-4">
-                    <label for="temporary_workbase" class="block mb-1 font-medium text-green-500">Temporary Workbase *</label>
+                    <label for="temporary_workbase" class="block mb-1 font-medium text-green-500">Temporary Workbase
+                        *</label>
                     <select id="temporary_workbase" name="temporary_workbase" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Workbase</option>
@@ -175,7 +176,8 @@
 
                 <!-- Project Assigned -->
                 <div class="sm:cols-span-6 lg:col-span-4">
-                    <label for="project_assigned" class="block mb-1 font-medium text-green-500">Project Assigned</label>
+                    <label for="project_assigned" class="block mb-1 font-medium text-green-500">Project
+                        Assigned</label>
                     <select id="project_assigned" name="project_assigned"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Project Assigned</option>
@@ -201,7 +203,8 @@
 
                 <!-- Contract Expiration -->
                 <div class="sm:cols-span-6 lg:col-span-4">
-                    <label for="contract_expiration" class="block mb-1 font-medium text-green-500">Contract Expiration</label>
+                    <label for="contract_expiration" class="block mb-1 font-medium text-green-500">Contract
+                        Expiration</label>
                     <input type="date" id="contract_expiration" name="contract_expiration"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md 
                         focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -212,7 +215,8 @@
 
                 <!-- Probationary Date -->
                 <div class="sm:cols-span-6 lg:col-span-2">
-                    <label for="probitionary_date" class="block mb-1 font-medium text-green-500">Probationary Date</label>
+                    <label for="probitionary_date" class="block mb-1 font-medium text-green-500">Probationary
+                        Date</label>
                     <input type="date" id="probitionary_date" name="probitionary_date"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md 
                         focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -223,7 +227,8 @@
 
                 <!-- Regularization Date -->
                 <div class="sm:cols-span-6 lg:col-span-2">
-                    <label for="regularization_date" class="block mb-1 font-medium text-green-500">Regularization Date</label>
+                    <label for="regularization_date" class="block mb-1 font-medium text-green-500">Regularization
+                        Date</label>
                     <input type="date" id="regularization_date" name="regularization_date"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md 
                         focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -290,7 +295,8 @@
 
                 <!-- Educational Attainment -->
                 <div>
-                    <label for="educational_attainment" class="block mb-1 font-medium text-green-500">Educational Attainment</label>
+                    <label for="educational_attainment" class="block mb-1 font-medium text-green-500">Educational
+                        Attainment</label>
                     <select id="educational_attainment" name="educational_attainment"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Options</option>
@@ -332,7 +338,8 @@
 
                 <!-- Professional Licensure -->
                 <div>
-                    <label for="professional_licensure" class="block mb-1 font-medium text-green-500">Professional Licensure</label>
+                    <label for="professional_licensure" class="block mb-1 font-medium text-green-500">Professional
+                        Licensure</label>
                     <select id="professional_licensure" name="professional_licensure"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Options</option>
@@ -367,11 +374,44 @@
                     @enderror
                 </div>
 
-
-                <div class="lg:col-span-3">
-                    @livewire('location-selector')
+                <div>
+                    <label for="province" class="block mb-1 font-medium text-green-500">Province *</label>
+                    <select id="province" name="province" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">SELECT PROVINCE</option>
+                        @foreach ($provinces as $province)
+                            <option value="{{ $province }}">{{ $province }}</option>
+                        @endforeach
+                    </select>
+                    @error('province')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
+                <div>
+                    <label for="municipality" class="block mb-1 font-medium text-green-500">Municipality *</label>
+                    <select id="municipality" name="municipality" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">SELECT MUNICIPALITY</option>
+                    </select>
+
+                    @error('municipality')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Barangay -->
+                <div>
+                    <label for="barangay" class="block mb-1 font-medium text-green-500">Barangay *</label>
+                    <select id="barangay" name="barangay" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">SELECT BARANGAY</option>
+                    </select>
+
+                    @error('barangay')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <!-- Address (full width) -->
                 <div>
@@ -428,7 +468,8 @@
 
                 <!-- PhilHealth Number -->
                 <div>
-                    <label for="philhealth_number" class="block mb-1 font-medium text-green-500">PhilHealth Number</label>
+                    <label for="philhealth_number" class="block mb-1 font-medium text-green-500">PhilHealth
+                        Number</label>
                     <input type="text" id="philhealth_number" name="philhealth_number"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -617,7 +658,8 @@
                 </div>
 
                 <div>
-                    <label for="transpo_assistance" class="block mb-1 font-medium text-green-500">Transport Assistance</label>
+                    <label for="transpo_assistance" class="block mb-1 font-medium text-green-500">Transport
+                        Assistance</label>
                     <input type="number" id="transpo_assistance" name="transpo_assistance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -627,7 +669,8 @@
                 </div>
 
                 <div>
-                    <label for="clothing_allowance" class="block mb-1 font-medium text-green-500">Clothing Allowance</label>
+                    <label for="clothing_allowance" class="block mb-1 font-medium text-green-500">Clothing
+                        Allowance</label>
                     <input type="number" id="clothing_allowance" name="clothing_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -637,7 +680,8 @@
                 </div>
 
                 <div>
-                    <label for="transpo_allowance" class="block mb-1 font-medium text-green-500">Transport Allowance</label>
+                    <label for="transpo_allowance" class="block mb-1 font-medium text-green-500">Transport
+                        Allowance</label>
                     <input type="number" id="transpo_allowance" name="transpo_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -658,7 +702,8 @@
                 </div>
 
                 <div>
-                    <label for="project_allowance" class="block mb-1 font-medium text-green-500">Project Allowance</label>
+                    <label for="project_allowance" class="block mb-1 font-medium text-green-500">Project
+                        Allowance</label>
                     <input type="number" id="project_allowance" name="project_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -668,7 +713,8 @@
                 </div>
 
                 <div>
-                    <label for="technical_allowance" class="block mb-1 font-medium text-green-500">Technical Allowance</label>
+                    <label for="technical_allowance" class="block mb-1 font-medium text-green-500">Technical
+                        Allowance</label>
                     <input type="number" id="technical_allowance" name="technical_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -678,7 +724,8 @@
                 </div>
 
                 <div>
-                    <label for="positional_allowance" class="block mb-1 font-medium text-green-500">Positional Allowance</label>
+                    <label for="positional_allowance" class="block mb-1 font-medium text-green-500">Positional
+                        Allowance</label>
                     <input type="number" id="positional_allowance" name="positional_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -688,7 +735,8 @@
                 </div>
 
                 <div>
-                    <label for="professional_allowance" class="block mb-1 font-medium text-green-500">Professional Allowance</label>
+                    <label for="professional_allowance" class="block mb-1 font-medium text-green-500">Professional
+                        Allowance</label>
                     <input type="number" id="professional_allowance" name="professional_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -698,7 +746,8 @@
                 </div>
 
                 <div>
-                    <label for="housing_allowance" class="block mb-1 font-medium text-green-500">Housing Allowance</label>
+                    <label for="housing_allowance" class="block mb-1 font-medium text-green-500">Housing
+                        Allowance</label>
                     <input type="number" id="housing_allowance" name="housing_allowance"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
@@ -722,7 +771,45 @@
                 Save Information
             </button>
         </div>
-
-
     </form>
+
+
+    <script>
+        document.getElementById('province').addEventListener('change', function() {
+            let province = this.value;
+            let municipalitySelect = document.getElementById('municipality');
+            let barangaySelect = document.getElementById('barangay');
+
+            municipalitySelect.innerHTML = '<option value="">SELECT MUNICIPALITY</option>';
+            barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
+
+            if (!province) return;
+
+            fetch(`/locations/municipalities?province=${encodeURIComponent(province)}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        municipalitySelect.innerHTML += `<option value="${item}">${item}</option>`;
+                    });
+                });
+        });
+
+        document.getElementById('municipality').addEventListener('change', function() {
+            let municipality = this.value;
+            let barangaySelect = document.getElementById('barangay');
+
+            barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
+
+            if (!municipality) return;
+
+            fetch(`/locations/barangays?municipality=${encodeURIComponent(municipality)}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        barangaySelect.innerHTML += `<option value="${item}">${item}</option>`;
+                    });
+                });
+        });
+    </script>
+
 </x-layout>

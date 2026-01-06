@@ -10,17 +10,16 @@
                 <button id="editBtn" class="bg-green-500 text-white text-xs px-3 py-2 rounded hover:bg-green-600">
                     Edit
                 </button>
-                <button id="deleteBtn"
-                    class="bg-red-500 text-white text-xs px-3 py-2 rounded hover:bg-red-600">
+                <button id="deleteBtn" class="bg-red-500 text-white text-xs px-3 py-2 rounded hover:bg-red-600">
                     Delete
                 </button>
 
-                <a href="{{ route('dashboard.form', $manlistEntry->id) }}" id="generateFormBtn"
+                <a href="{{ route('manlist.form', $manlistEntry->id) }}" id="generateFormBtn"
                     class="bg-blue-500 text-white text-xs px-3 py-2 rounded hover:bg-blue-600 {{ strtoupper(Auth::user()->credential) === 'ADMIN' ? '' : 'hidden' }}"
                     target="_blank">
                     Generate Form
                 </a>
-                <a href="{{ route('dashboard.contract', $manlistEntry->id) }}" id="generateContractBtn"
+                <a href="{{ route('manlist.contract', $manlistEntry->id) }}" id="generateContractBtn"
                     class="bg-blue-500 text-white text-xs px-3 py-2 rounded hover:bg-blue-600 {{ strtoupper(Auth::user()->credential) === 'ADMIN' ? '' : 'hidden' }}"
                     target="_blank">
                     Generate Contract
@@ -40,7 +39,7 @@
     </div>
 
 
-    <form action="{{ route('dashboard.update', $manlistEntry->id) }}" method="POST">
+    <form action="{{ route('manlist.update', $manlistEntry->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -553,8 +552,44 @@
                     </div>
 
 
-                    <div class="col-span-12">
-                        @livewire('location-selector', ['manlistEntry' => $manlistEntry])
+                    <div class="sm:col-span-6 lg:col-span-4">
+                        <label for="province" class="block mb-1 font-medium text-green-500">Province *</label>
+                        <select id="province" name="province" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">SELECT PROVINCE</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province }}"
+                                    {{ $province == $selectedProvince ? 'selected' : '' }}>
+                                    {{ $province }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('province')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="sm:col-span-6 lg:col-span-4">
+                        <label for="municipality" class="block mb-1 font-medium text-green-500">Municipality *</label>
+                        <select id="municipality" name="municipality" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">SELECT MUNICIPALITY</option>
+                        </select>
+                        @error('municipality')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Barangay -->
+                    <div class="sm:col-span-6 lg:col-span-4">
+                        <label for="barangay" class="block mb-1 font-medium text-green-500">Barangay *</label>
+                        <select id="barangay" name="barangay" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">SELECT BARANGAY</option>
+                        </select>
+                        @error('barangay')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Address (full width) -->
@@ -754,7 +789,8 @@
             </div>
 
             <!-- COMPENSATION CARD -->
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-3 p-6 space-y-4 {{ strtoupper(Auth::user()->credential) === 'ADMIN' ? '' : 'hidden' }}">
+            <div
+                class="bg-white rounded-lg shadow-sm overflow-hidden mb-3 p-6 space-y-4 {{ strtoupper(Auth::user()->credential) === 'ADMIN' ? '' : 'hidden' }}">
                 <div class="flex justify-between items-center mb-4">
                     <span class="inline-block px-3 py-1 text-sm font-semibold text-white bg-green-500 rounded-full">
                         Compensation
@@ -975,7 +1011,7 @@
                 </button>
 
                 <!-- Form for delete -->
-                <form id="deleteForm" action="{{ route('dashboard.destroy', $manlistEntry->id) }}" method="POST">
+                <form id="deleteForm" action="{{ route('manlist.destroy', $manlistEntry->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
@@ -1048,4 +1084,77 @@
         });
     </script>
 
+    <script>
+        const selectedProvince = "{{ $selectedProvince }}";
+        const selectedMunicipality = "{{ $selectedMunicipality }}";
+        const selectedBarangay = "{{ $selectedBarangay }}";
+
+        const provinceSelect = document.getElementById('province');
+        const municipalitySelect = document.getElementById('municipality');
+        const barangaySelect = document.getElementById('barangay');
+
+        // Preload municipality and barangay on page load
+        if (selectedProvince) {
+            fetch(`/locations/municipalities?province=${encodeURIComponent(selectedProvince)}`)
+                .then(res => res.json())
+                .then(data => {
+                    municipalitySelect.innerHTML = '<option value="">SELECT MUNICIPALITY</option>';
+                    data.forEach(item => {
+                        const opt = document.createElement('option');
+                        opt.value = item;
+                        opt.textContent = item;
+                        if (item === selectedMunicipality) opt.selected = true;
+                        municipalitySelect.appendChild(opt);
+                    });
+
+                    if (selectedMunicipality) {
+                        fetch(`/locations/barangays?municipality=${encodeURIComponent(selectedMunicipality)}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
+                                data.forEach(item => {
+                                    const opt = document.createElement('option');
+                                    opt.value = item;
+                                    opt.textContent = item;
+                                    if (item === selectedBarangay) opt.selected = true;
+                                    barangaySelect.appendChild(opt);
+                                });
+                            });
+                    }
+                });
+        }
+
+        // Event listeners for change (same as before)
+        provinceSelect.addEventListener('change', function() {
+            let province = this.value;
+
+            municipalitySelect.innerHTML = '<option value="">SELECT MUNICIPALITY</option>';
+            barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
+
+            if (!province) return;
+
+            fetch(`/locations/municipalities?province=${encodeURIComponent(province)}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        municipalitySelect.innerHTML += `<option value="${item}">${item}</option>`;
+                    });
+                });
+        });
+
+        municipalitySelect.addEventListener('change', function() {
+            let municipality = this.value;
+            barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
+
+            if (!municipality) return;
+
+            fetch(`/locations/barangays?municipality=${encodeURIComponent(municipality)}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        barangaySelect.innerHTML += `<option value="${item}">${item}</option>`;
+                    });
+                });
+        });
+    </script>
 </x-layout>

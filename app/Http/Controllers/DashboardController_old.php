@@ -543,6 +543,7 @@ class DashboardController extends Controller
             return redirect()->route('dashboard.index')->with('error', 'Failed to delete entry. Please try again.');
         }
     }
+    
     public function exportExcel()
     {
         $manlists = Manlist::with(['personalInfo', 'contactEmergency', 'leaveIncentive', 'compensation'])->get();
