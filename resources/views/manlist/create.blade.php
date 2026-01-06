@@ -761,7 +761,7 @@
 
 
         <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-3 p-6 flex justify-between items-center">
-            <a href="{{ route('dashboard.index') }}"
+            <a href="{{ route('manlist.index') }}"
                 class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-500 transition font-medium">
                 Cancel
             </a>
@@ -775,6 +775,9 @@
 
 
     <script>
+        const MUNICIPALITIES_URL = "{{ route('locations.municipalities') }}";
+        const BARANGAYS_URL = "{{ route('locations.barangays') }}";
+
         document.getElementById('province').addEventListener('change', function() {
             let province = this.value;
             let municipalitySelect = document.getElementById('municipality');
@@ -785,7 +788,7 @@
 
             if (!province) return;
 
-            fetch(`/locations/municipalities?province=${encodeURIComponent(province)}`)
+            fetch(`${MUNICIPALITIES_URL}?province=${encodeURIComponent(province)}`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach(item => {
@@ -802,7 +805,7 @@
 
             if (!municipality) return;
 
-            fetch(`/locations/barangays?municipality=${encodeURIComponent(municipality)}`)
+            fetch(`${BARANGAYS_URL}?municipality=${encodeURIComponent(municipality)}`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach(item => {

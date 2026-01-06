@@ -1083,8 +1083,11 @@
             fieldset.closest('form').submit();
         });
     </script>
-
+    
     <script>
+        const MUNICIPALITIES_URL = "{{ route('locations.municipalities') }}";
+        const BARANGAYS_URL = "{{ route('locations.barangays') }}";
+
         const selectedProvince = "{{ $selectedProvince }}";
         const selectedMunicipality = "{{ $selectedMunicipality }}";
         const selectedBarangay = "{{ $selectedBarangay }}";
@@ -1095,7 +1098,7 @@
 
         // Preload municipality and barangay on page load
         if (selectedProvince) {
-            fetch(`/locations/municipalities?province=${encodeURIComponent(selectedProvince)}`)
+            fetch(`${MUNICIPALITIES_URL}?province=${encodeURIComponent(selectedProvince)}`)
                 .then(res => res.json())
                 .then(data => {
                     municipalitySelect.innerHTML = '<option value="">SELECT MUNICIPALITY</option>';
@@ -1108,7 +1111,7 @@
                     });
 
                     if (selectedMunicipality) {
-                        fetch(`/locations/barangays?municipality=${encodeURIComponent(selectedMunicipality)}`)
+                        fetch(`${BARANGAYS_URL}?municipality=${encodeURIComponent(selectedMunicipality)}`)
                             .then(res => res.json())
                             .then(data => {
                                 barangaySelect.innerHTML = '<option value="">SELECT BARANGAY</option>';
@@ -1124,7 +1127,7 @@
                 });
         }
 
-        // Event listeners for change (same as before)
+        // Event listeners for change
         provinceSelect.addEventListener('change', function() {
             let province = this.value;
 
@@ -1133,7 +1136,7 @@
 
             if (!province) return;
 
-            fetch(`/locations/municipalities?province=${encodeURIComponent(province)}`)
+            fetch(`${MUNICIPALITIES_URL}?province=${encodeURIComponent(province)}`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach(item => {
@@ -1148,7 +1151,7 @@
 
             if (!municipality) return;
 
-            fetch(`/locations/barangays?municipality=${encodeURIComponent(municipality)}`)
+            fetch(`${BARANGAYS_URL}?municipality=${encodeURIComponent(municipality)}`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach(item => {
@@ -1157,4 +1160,5 @@
                 });
         });
     </script>
+
 </x-layout>

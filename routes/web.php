@@ -27,8 +27,8 @@ Route::prefix('manlist')->middleware(['auth'])->controller(ManlistController::cl
     Route::post('/import', 'importExcel')->name('manlist.import');
 });
 
-Route::get('/locations/municipalities', [ManlistController::class, 'getMunicipalities']);
-Route::get('/locations/barangays', [ManlistController::class, 'getBarangays']);
+Route::get('/locations/municipalities', [ManlistController::class, 'getMunicipalities'])->name('locations.municipalities');
+Route::get('/locations/barangays', [ManlistController::class, 'getBarangays'])->name('locations.barangays');
 
 
 Route::get('/download-manlist-template', function () {

@@ -177,6 +177,7 @@
         </div>
     </div>
 
+
     <!-- Update User Modal -->
     <div id="updateUserModal"
         class="fixed inset-0 z-50 hidden items-center justify-center backdrop-blur-sm bg-black/30">
@@ -187,6 +188,7 @@
                 Edit the information below to update the user.
             </p>
 
+            <!-- Use a placeholder action; JS will replace it -->
             <form id="updateUserForm" method="POST">
                 @csrf
                 @method('PUT')
@@ -196,9 +198,6 @@
                     <label class="block text-sm font-medium text-gray-700">Name</label>
                     <input type="text" id="edit_name" name="name" required
                         class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
-                    @error('name')
-                        <span class="text-red-600 text-sm">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <!-- Email -->
@@ -206,9 +205,6 @@
                     <label class="block text-sm font-medium text-gray-700">Email</label>
                     <input type="email" id="edit_email" name="email" required
                         class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
-                    @error('email')
-                        <span class="text-red-600 text-sm">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <!-- Credential -->
@@ -220,11 +216,7 @@
                         <option value="STAFF">STAFF</option>
                         <option value="ADMIN">ADMIN</option>
                     </select>
-                    @error('credential')
-                        <span class="text-red-600 text-sm">{{ $message }}</span>
-                    @enderror
                 </div>
-
 
                 <!-- Password -->
                 <div class="mb-3">
@@ -257,51 +249,55 @@
         </div>
     </div>
 
+
     <script>
+        // Open/close Add User Modal
         function openAddUserModal() {
-            document.getElementById('addUserModal').classList.remove('hidden');
-            document.getElementById('addUserModal').classList.add('flex');
+            const modal = document.getElementById('addUserModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
-
         function closeAddUserModal() {
-            document.getElementById('addUserModal').classList.add('hidden');
-            document.getElementById('addUserModal').classList.remove('flex');
-        }
-    </script>
-
-    <script>
-        function openDeleteUserModal(userId) {
-            const form = document.getElementById('deleteUserForm');
-            form.action = `/maintenance/delete_user/${userId}`;
-
-            document.getElementById('deleteUserModal').classList.remove('hidden');
-            document.getElementById('deleteUserModal').classList.add('flex');
+            const modal = document.getElementById('addUserModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
-        function closeDeleteUserModal() {
-            document.getElementById('deleteUserModal').classList.add('hidden');
-            document.getElementById('deleteUserModal').classList.remove('flex');
-        }
-    </script>
-
-    <script>
+        // Open/close Update User Modal
         function openUpdateUserModal(id, name, email, credential) {
             document.getElementById('edit_name').value = name;
             document.getElementById('edit_email').value = email;
             document.getElementById('edit_credential').value = credential;
 
             const form = document.getElementById('updateUserForm');
-            form.action = `/maintenance/update_user/${id}`;
+            form.action = "{{ route('maintenance.update_user', ':id') }}".replace(':id', id);
 
-            document.getElementById('updateUserModal').classList.remove('hidden');
-            document.getElementById('updateUserModal').classList.add('flex');
+            const modal = document.getElementById('updateUserModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeUpdateUserModal() {
+            const modal = document.getElementById('updateUserModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
-        function closeUpdateUserModal() {
-            document.getElementById('updateUserModal').classList.add('hidden');
-            document.getElementById('updateUserModal').classList.remove('flex');
+        // Open/close Delete User Modal
+        function openDeleteUserModal(id) {
+            const form = document.getElementById('deleteUserForm');
+            form.action = "{{ route('maintenance.delete_user', ':id') }}".replace(':id', id);
+
+            const modal = document.getElementById('deleteUserModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeDeleteUserModal() {
+            const modal = document.getElementById('deleteUserModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
     </script>
+
 
     @if ($errors->any())
         <script>
