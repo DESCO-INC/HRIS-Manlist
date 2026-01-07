@@ -47,4 +47,23 @@ Route::prefix('maintenance')->middleware(['auth'])->controller(MaintenanceContro
     Route::post('/store_user', 'store_user')->name('maintenance.store_user');
     Route::delete('/delete_user/{user}', 'delete_user')->name('maintenance.delete_user');
     Route::put('/update_user/{user}', 'update_user')->name('maintenance.update_user');
+
+    Route::get('/system', 'system')->name('maintenance.system');
+    Route::post('/store_classList', 'store_classList')->name('maintenance.store_classList');
+    Route::delete('/delete_classList/{list}', 'delete_classList')->name('maintenance.delete_classList');
+
+    Route::post('/store_deptList', 'store_deptList')->name('maintenance.store_deptList');
+    Route::delete('/delete_deptList/{dept}', 'delete_deptList')->name('maintenance.delete_deptList');
+
+    Route::post('/store_statusList', 'store_statusList')->name('maintenance.store_statusList');
+    Route::delete('/delete_statusList/{empstat}', 'delete_statusList')->name('maintenance.delete_statusList');
+
+    Route::post('/store_licenseList', 'store_licenseList')->name('maintenance.store_licenseList');
+    Route::delete('/delete_licenseList/{license}', 'delete_licenseList')->name('maintenance.delete_licenseList');
+
+    Route::post('/store_projectList', 'store_projectList')->name('maintenance.store_projectList');
+    Route::delete('/delete_projectList/{project}', 'delete_projectList')->name('maintenance.delete_projectList');
+
+    Route::post('/store_siteList', 'store_siteList')->name('maintenance.store_siteList');
+    Route::delete('/delete_siteList/{site}', 'delete_siteList')->name('maintenance.delete_siteList');
 });

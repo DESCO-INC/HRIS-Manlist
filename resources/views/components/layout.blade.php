@@ -149,6 +149,7 @@
                     @auth
                         <x-nav-dropdown label="System Maintenance" :items="[
                             ['label' => 'User Maintenance', 'url' => '/maintenance/'],
+                            ['label' => 'Other Maintenance', 'url' => '/maintenance/system'],
                         ]" />
 
                         <!-- Profile Dropdown -->
