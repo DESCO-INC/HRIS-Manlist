@@ -31,11 +31,31 @@
 
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
         <div class="px-6 py-5 overflow-x-auto">
-            <!-- Search -->
+            <!-- Search + Sort Form -->
             <form method="GET" class="mb-4 flex items-center gap-2">
+                <!-- Search -->
                 <x-basic.input type="text" name="search" value="{{ $search }}" placeholder="Search" />
-                <x-basic.button variant="success">Search</x-basic.button>
+
+                <!-- Sort Column -->
+                <x-basic.select name="sort_column" :options="[
+                    '' => 'Sort By',
+                    'emp_number' => 'Emp #',
+                    'firstname' => 'Name',
+                    'department' => 'Department',
+                    'position' => 'Position',
+                    'datehired' => 'Date Hired',
+                    'emp_status' => 'Status',
+                ]" :selected="request('sort_column')" />
+
+                <!-- Sort Direction -->
+                <x-basic.select name="sort_direction" :options="[
+                    'asc' => 'Ascending',
+                    'desc' => 'Descending',
+                ]" :selected="request('sort_direction', 'desc')" />
+
+                <x-basic.button variant="success">Apply</x-basic.button>
             </form>
+
 
             <x-table.main class="">
                 <thead class="bg-green-600 text-white">

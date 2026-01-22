@@ -35,6 +35,17 @@ class ManlistController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $sortColumn = $request->input('sort_column', 'id'); // default to id
+        $sortDirection = $request->input('sort_direction', 'desc'); // default to desc
+
+        // Only allow sortable columns for security
+        $allowedSorts = ['emp_number', 'firstname', 'lastname', 'department', 'position', 'emp_status', 'datehired', 'id'];
+        if (!in_array($sortColumn, $allowedSorts)) {
+            $sortColumn = 'id';
+        }
+        if (!in_array(strtolower($sortDirection), ['asc', 'desc'])) {
+            $sortDirection = 'desc';
+        }
 
         $query = Manlist::when($search, function ($q) use ($search) {
             $q->where(function ($query) use ($search) {
@@ -49,7 +60,9 @@ class ManlistController extends Controller
             });
         });
 
-        $manlists = $query->orderByDesc('id')->paginate(10);
+        // Apply sorting
+        $manlists = $query->orderBy($sortColumn, $sortDirection)->paginate(10)->withQueryString();
+
         return view('manlist.index', compact('manlists', 'search'));
     }
 
