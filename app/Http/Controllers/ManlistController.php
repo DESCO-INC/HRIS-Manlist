@@ -274,7 +274,7 @@ class ManlistController extends Controller
             'datehired' => 'required|date',
             'workbase' => 'required|string|max:255',
             'temporary_workbase' => 'required|string|max:255',
-            'project_assigned' => 'required|string|max:255',
+            'project_assigned' => 'nullable',
             'project_hired' => 'nullable|date',
             'contract_expiration' => 'nullable|date',
             'probitionary_date' => 'nullable|date',

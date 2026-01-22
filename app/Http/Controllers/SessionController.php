@@ -12,7 +12,7 @@ class SessionController extends Controller
     {
         // If user is logged in, redirect to items.index
         if (Auth::check()) {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('manlist.index');
         }
 
         // Return login view for guests

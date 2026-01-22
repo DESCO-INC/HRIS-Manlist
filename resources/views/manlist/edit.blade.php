@@ -39,7 +39,7 @@
     </div>
 
 
-    <form action="{{ route('manlist.update', $manlistEntry->id) }}" method="POST">
+    <form action="{{ route('manlist.update', $manlistEntry->id) }}" method="POST" id="editform">
         @csrf
         @method('PUT')
 
@@ -254,7 +254,7 @@
                     <!-- Project Assigned -->
                     <div class="sm:cols-span-6 lg:col-span-4">
                         <label for="project_assigned" class="block mb-1 font-medium text-green-500">Project Assigned
-                            *</label>
+                            </label>
                         <select id="project_assigned" name="project_assigned"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                             <option value="">Select Project Assigned</option>
@@ -1030,6 +1030,7 @@
         const editBtn = document.getElementById('editBtn');
         const footerSaveBtn = document.getElementById('footerSaveBtn');
         const footerCancelBtn = document.getElementById('footerCancelBtn');
+        const form = document.querySelector('#editform');
         const formSaveBtn = document.getElementById('formSaveBtn');
         const fieldset = document.getElementById('formFieldset');
 
@@ -1081,7 +1082,10 @@
         footerSaveBtn.addEventListener('click', () => {
             // Trigger the form submit button to respect HTML5 validation
             formSaveBtn.click();
+            form.requestSubmit();
+            console.log("triggered");
         });
+        
 
         // ----------------------
         // Optional: Save Button inside form can have same logic or be left native
