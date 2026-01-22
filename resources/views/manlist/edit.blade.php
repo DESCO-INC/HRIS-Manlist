@@ -26,11 +26,11 @@
                 </a>
 
                 <!-- Hidden Save/Cancel Buttons -->
-                <button id="saveBtn"
+                <button id="footerSaveBtn"
                     class="bg-green-500 text-white text-xs px-3 py-2 rounded hover:bg-green-600 hidden">
                     Save
                 </button>
-                <button id="cancelBtn"
+                <button id="footerCancelBtn"
                     class="bg-gray-500 text-white text-xs px-3 py-2 rounded hover:bg-gray-600 hidden">
                     Cancel
                 </button>
@@ -978,7 +978,7 @@
                 </div>
             </div>
 
-            <div id="footerbtn"
+            <div id="formSaveBtn"
                 class="bg-white rounded-lg shadow-sm overflow-hidden mb-3 p-6 flex justify-end items-center hidden">
 
                 <button type="submit"
@@ -987,12 +987,6 @@
                 </button>
             </div>
         </fieldset>
-
-        <!-- Optional: Top Save Button (in your top button group) -->
-        <button type="submit" id="saveBtn"
-            class="bg-green-500 text-white text-xs px-3 py-2 rounded hover:bg-green-600 hidden">
-            Save
-        </button>
     </form>
 
     <!-- Delete Confirmation Modal -->
@@ -1033,57 +1027,71 @@
     </script>
 
     <script>
-        const footerBtn = document.getElementById('footerbtn');
         const editBtn = document.getElementById('editBtn');
-        const saveBtn = document.getElementById('saveBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const otherBtns = ['deleteBtn', 'generateFormBtn', 'generateContractBtn'].map(id => document.getElementById(id));
+        const footerSaveBtn = document.getElementById('footerSaveBtn');
+        const footerCancelBtn = document.getElementById('footerCancelBtn');
+        const formSaveBtn = document.getElementById('formSaveBtn');
         const fieldset = document.getElementById('formFieldset');
+
+        const otherBtns = ['deleteBtn', 'generateFormBtn', 'generateContractBtn'].map(id => document.getElementById(id));
 
         // Store original values
         fieldset.querySelectorAll('input, select, textarea').forEach(el => {
             el.dataset.originalValue = el.value;
         });
 
+        // ----------------------
+        // Edit Button
+        // ----------------------
         editBtn.addEventListener('click', () => {
-            // Enable the fieldset
             fieldset.disabled = false;
             fieldset.classList.remove('opacity-80', 'pointer-events-none');
 
-            // Hide other buttons, show Save/Cancel
             editBtn.classList.add('hidden');
             otherBtns.forEach(btn => btn.classList.add('hidden'));
-            footerBtn.classList.remove('hidden');
-            saveBtn.classList.remove('hidden');
-            cancelBtn.classList.remove('hidden');
+            footerSaveBtn.classList.remove('hidden');
+            footerCancelBtn.classList.remove('hidden');
+            formSaveBtn.classList.remove('hidden'); // inside form hidden button
         });
 
-        cancelBtn.addEventListener('click', () => {
-            // Disable fieldset
+        // ----------------------
+        // Cancel Button
+        // ----------------------
+        footerCancelBtn.addEventListener('click', () => {
             fieldset.disabled = true;
             fieldset.classList.add('opacity-80', 'pointer-events-none');
 
-            // Restore original buttons
             editBtn.classList.remove('hidden');
             @if (strtoupper(Auth::user()->credential) === 'ADMIN')
                 otherBtns.forEach(btn => btn.classList.remove('hidden'));
             @endif
-            footerBtn.classList.add('hidden');
-            saveBtn.classList.add('hidden');
-            cancelBtn.classList.add('hidden');
+            footerSaveBtn.classList.add('hidden');
+            footerCancelBtn.classList.add('hidden');
+            formSaveBtn.classList.add('hidden');
 
-            // Optionally reset form fields if needed
+            // Reset form fields to original values
             fieldset.querySelectorAll('input, select, textarea').forEach(el => {
                 el.value = el.dataset.originalValue;
             });
         });
 
-        // Save button can submit the form or you can handle it here
-        saveBtn.addEventListener('click', () => {
-            fieldset.closest('form').submit();
+        // ----------------------
+        // Save Button (outside) triggers internal submit
+        // ----------------------
+        footerSaveBtn.addEventListener('click', () => {
+            // Trigger the form submit button to respect HTML5 validation
+            formSaveBtn.click();
+        });
+
+        // ----------------------
+        // Optional: Save Button inside form can have same logic or be left native
+        // ----------------------
+        formSaveBtn.addEventListener('click', () => {
+            // You can add extra JS before submit here if needed
+            // Otherwise, browser will handle validation automatically
         });
     </script>
-    
+
     <script>
         const MUNICIPALITIES_URL = "{{ route('locations.municipalities') }}";
         const BARANGAYS_URL = "{{ route('locations.barangays') }}";

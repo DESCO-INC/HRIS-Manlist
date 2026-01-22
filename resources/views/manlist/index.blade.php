@@ -71,6 +71,7 @@
                                     {{ $manlist->emp_status }}
                                 </x-basic.badge>
                             </x-table.td>
+                            <x-table.td>{{ $manlist->datehired }}</x-table.td>
                             <x-table.td class="text-center">
                                 <a href="{{ route('manlist.edit', $manlist->id) }}"
                                     class="bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 inline-block">
