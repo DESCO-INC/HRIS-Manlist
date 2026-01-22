@@ -66,7 +66,6 @@
                             <x-table.td>{{ $manlist->position }}</x-table.td>
                             <x-table.td>{{ $manlist->workbase }}</x-table.td>
                             <x-table.td>{{ $manlist->emp_classification }}</x-table.td>
-                            <x-table.td>{{ $manlist->position }}</x-table.td>
                             <x-table.td class="text-center">
                                 <x-basic.badge variant="{{ $emp_status }}">
                                     {{ $manlist->emp_status }}

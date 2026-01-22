@@ -556,25 +556,11 @@ class ManlistController extends Controller
 
             DB::beginTransaction();
 
-            $manlistData = [];
-            $personalData = [];
-            $contactData = [];
-            $leaveData = [];
-            $compData = [];
-            $validRowIndexes = [];
-
             $upper = fn($v) => is_string($v) ? strtoupper($v) : $v;
-
-            // Helper: convert Excel serial number to date
-            $convertDate = function ($value) {
-                if (is_numeric($value)) {
-                    return ExcelDate::excelToDateTimeObject($value)->format('Y-m-d');
-                }
-                return $value;
-            };
+            $convertDate = fn($value) => is_numeric($value) ? ExcelDate::excelToDateTimeObject($value)->format('Y-m-d') : $value;
 
             // ---------------------------------------------------------
-            // Prepare batch data
+            // Process rows
             // ---------------------------------------------------------
             for ($i = 1; $i < count($rows); $i++) {
                 // Convert empty cells or whitespace-only cells to null
@@ -584,85 +570,93 @@ class ManlistController extends Controller
                     continue;
                 }
 
-                $validRowIndexes[] = $i;
+                // ----------------------
+                // Insert Manlist and get ID
+                // ----------------------
+                $manlistId = DB::table('manlists')->insertGetId(
+                    array_map($upper, [
+                        'emp_number' => $row['EMP_NUMBER'],
+                        'firstname' => $row['FIRSTNAME'],
+                        'middlename' => $row['MIDDLENAME'],
+                        'lastname' => $row['LASTNAME'],
+                        'suffix' => $row['SUFFIX'],
+                        'position' => $row['POSITION'],
+                        'department' => $row['DEPARTMENT'],
+                        'emp_classification' => $row['EMP_CLASSIFICATION'],
+                        'emp_status' => $row['EMP_STATUS'],
+                        'datehired' => $row['DATEHIRED'] ? $convertDate($row['DATEHIRED']) : null,
+                        'workbase' => $row['WORKBASE'],
+                        'temporary_workbase' => $row['TEMPORARY_WORKBASE'],
+                        'project_assigned' => $row['PROJECT_ASSIGNED'],
+                        'project_hired' => $row['PROJECT_HIRED'] ? $convertDate($row['PROJECT_HIRED']) : null,
+                        'contract_expiration' => $row['CONTRACT_EXPIRATION'] ? $convertDate($row['CONTRACT_EXPIRATION']) : null,
+                        'probitionary_date' => $row['PROBITIONARY_DATE'] ? $convertDate($row['PROBITIONARY_DATE']) : null,
+                        'regularization_date' => $row['REGULARIZATION_DATE'] ? $convertDate($row['REGULARIZATION_DATE']) : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]),
+                );
 
-                // ---------------------------------------------------------
-                // Manlist data
-                // ---------------------------------------------------------
-                $manlistData[] = array_map($upper, [
-                    'emp_number' => $row['EMP_NUMBER'], // required
-                    'firstname' => $row['FIRSTNAME'], // required
-                    'middlename' => $row['MIDDLENAME'], // required
-                    'lastname' => $row['LASTNAME'], // required
-                    'suffix' => $row['SUFFIX'],
-                    'position' => $row['POSITION'], // required
-                    'department' => $row['DEPARTMENT'], // required
-                    'emp_classification' => $row['EMP_CLASSIFICATION'],
-                    'emp_status' => $row['EMP_STATUS'],
-                    'datehired' => $row['DATEHIRED'] ? $convertDate($row['DATEHIRED']) : null,
-                    'workbase' => $row['WORKBASE'],
-                    'temporary_workbase' => $row['TEMPORARY_WORKBASE'],
-                    'project_assigned' => $row['PROJECT_ASSIGNED'],
-                    'project_hired' => $row['PROJECT_HIRED'] ? $convertDate($row['PROJECT_HIRED']) : null,
-                    'contract_expiration' => $row['CONTRACT_EXPIRATION'] ? $convertDate($row['CONTRACT_EXPIRATION']) : null,
-                    'probitionary_date' => $row['PROBITIONARY_DATE'] ? $convertDate($row['PROBITIONARY_DATE']) : null,
-                    'regularization_date' => $row['REGULARIZATION_DATE'] ? $convertDate($row['REGULARIZATION_DATE']) : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-
-                // ---------------------------------------------------------
+                // ----------------------
                 // Personal info
-                // ---------------------------------------------------------
-                $personalData[] = array_map($upper, [
-                    'birthdate' => $row['BIRTHDATE'] ? $convertDate($row['BIRTHDATE']) : null,
-                    'gender' => $row['GENDER'],
-                    'civil_status' => $row['CIVIL_STATUS'],
-                    'educational_attainment' => $row['EDUCATIONAL_ATTAINMENT'],
-                    'school' => $row['SCHOOL'],
-                    'course' => $row['COURSE'],
-                    'professional_licensure' => $row['PROFESSIONAL_LICENSURE'],
-                    'phone_number' => $row['PHONE_NUMBER'],
-                    'email_address' => $row['EMAIL_ADDRESS'],
-                    'province' => $row['PROVINCE'],
-                    'municipality' => $row['MUNICIPALITY'],
-                    'barangay' => $row['BARANGAY'],
-                    'blood_type' => $row['BLOOD_TYPE'],
-                    'address' => $row['ADDRESS'],
-                    'tin_number' => $row['TIN_NUMBER'],
-                    'sss_number' => $row['SSS_NUMBER'],
-                    'philhealth_number' => $row['PHILHEALTH_NUMBER'],
-                    'pagibig_number' => $row['PAGIBIG_NUMBER'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                // ----------------------
+                DB::table('personal_infos')->insert(
+                    array_map($upper, [
+                        'manlist_id' => $manlistId,
+                        'birthdate' => $row['BIRTHDATE'] ? $convertDate($row['BIRTHDATE']) : null,
+                        'gender' => $row['GENDER'],
+                        'civil_status' => $row['CIVIL_STATUS'],
+                        'educational_attainment' => $row['EDUCATIONAL_ATTAINMENT'],
+                        'school' => $row['SCHOOL'],
+                        'course' => $row['COURSE'],
+                        'professional_licensure' => $row['PROFESSIONAL_LICENSURE'],
+                        'phone_number' => $row['PHONE_NUMBER'],
+                        'email_address' => $row['EMAIL_ADDRESS'],
+                        'province' => $row['PROVINCE'],
+                        'municipality' => $row['MUNICIPALITY'],
+                        'barangay' => $row['BARANGAY'],
+                        'blood_type' => $row['BLOOD_TYPE'],
+                        'address' => $row['ADDRESS'],
+                        'tin_number' => $row['TIN_NUMBER'],
+                        'sss_number' => $row['SSS_NUMBER'],
+                        'philhealth_number' => $row['PHILHEALTH_NUMBER'],
+                        'pagibig_number' => $row['PAGIBIG_NUMBER'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]),
+                );
 
-                // ---------------------------------------------------------
+                // ----------------------
                 // Contact
-                // ---------------------------------------------------------
-                $contactData[] = array_map($upper, [
-                    'contact_person' => $row['CONTACT_PERSON'],
-                    'relationship' => $row['RELATIONSHIP'],
-                    'contact_number' => $row['CONTACT_NUMBER'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                // ----------------------
+                DB::table('contact_emergencies')->insert(
+                    array_map($upper, [
+                        'manlist_id' => $manlistId,
+                        'contact_person' => $row['CONTACT_PERSON'],
+                        'relationship' => $row['RELATIONSHIP'],
+                        'contact_number' => $row['CONTACT_NUMBER'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]),
+                );
 
-                // ---------------------------------------------------------
+                // ----------------------
                 // Leave
-                // ---------------------------------------------------------
-                $leaveData[] = [
+                // ----------------------
+                DB::table('leave_incentives')->insert([
+                    'manlist_id' => $manlistId,
                     'SIL' => $row['SIL'] ?? 0,
                     'SL' => $row['SL'] ?? 0,
                     'VL' => $row['VL'] ?? 0,
                     'created_at' => now(),
                     'updated_at' => now(),
-                ];
+                ]);
 
-                // ---------------------------------------------------------
+                // ----------------------
                 // Compensation
-                // ---------------------------------------------------------
-                $compData[] = [
+                // ----------------------
+                DB::table('compensation')->insert([
+                    'manlist_id' => $manlistId,
                     'daily_rate' => $row['DAILY_RATE'] ?? 0,
                     'monthly_rate' => $row['MONTHLY_RATE'] ?? 0,
                     'meal_subsidy' => $row['MEAL_SUBSIDY'] ?? 0,
@@ -680,51 +674,13 @@ class ManlistController extends Controller
                     'housing_allowance' => $row['HOUSING_ALLOWANCE'] ?? 0,
                     'created_at' => now(),
                     'updated_at' => now(),
-                ];
-            }
-
-            // ---------------------------------------------------------
-            // Insert Manlist & get IDs
-            // ---------------------------------------------------------
-            $insertedIds = [];
-            foreach (array_chunk($manlistData, 500) as $chunk) {
-                DB::table('manlists')->insert($chunk);
-                $lastId = DB::getPdo()->lastInsertId();
-                for ($j = 0; $j < count($chunk); $j++) {
-                    $insertedIds[] = $lastId - count($chunk) + 1 + $j;
-                }
-            }
-
-            // Assign manlist_id to related tables
-            foreach ($validRowIndexes as $index => $rowIndex) {
-                $personalData[$index]['manlist_id'] = $insertedIds[$index];
-                $contactData[$index]['manlist_id'] = $insertedIds[$index];
-                $leaveData[$index]['manlist_id'] = $insertedIds[$index];
-                $compData[$index]['manlist_id'] = $insertedIds[$index];
-            }
-
-            // ---------------------------------------------------------
-            // Batch insert related tables
-            // ---------------------------------------------------------
-            foreach (array_chunk($personalData, 500) as $chunk) {
-                DB::table('personal_infos')->insert($chunk);
-            }
-            foreach (array_chunk($contactData, 500) as $chunk) {
-                DB::table('contact_emergencies')->insert($chunk);
-            }
-            foreach (array_chunk($leaveData, 500) as $chunk) {
-                DB::table('leave_incentives')->insert($chunk);
-            }
-            foreach (array_chunk($compData, 500) as $chunk) {
-                DB::table('compensation')->insert($chunk);
+                ]);
             }
 
             DB::commit();
             return back()->with('success', 'Excel data imported successfully!');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
-            return back()->with('error', 'Excel data import failed: ' . $e->getMessage());
         }
     }
 }
