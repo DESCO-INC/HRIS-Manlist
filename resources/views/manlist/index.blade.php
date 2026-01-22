@@ -101,16 +101,29 @@
     <div id="import-modal"
         class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
 
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
             <h2 class="text-xl font-semibold text-gray-800">Import Excel File</h2>
             <p class="mt-2 text-sm text-gray-600">Upload your Excel (.xlsx) file below.</p>
 
-            <form action="{{ route('manlist.import') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+            <!-- Loading Overlay -->
+            <div id="loading-overlay"
+                class="hidden absolute inset-0 bg-white/70 flex flex-col items-center justify-center rounded-lg">
+                <svg class="animate-spin h-10 w-10 text-blue-600 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+                <span class="text-gray-700 font-medium">Importing, please wait...</span>
+            </div>
+
+            <form id="import-form" action="{{ route('manlist.import') }}" method="POST" enctype="multipart/form-data"
+                class="mt-4">
                 @csrf
 
                 <input type="file" name="excel_file" accept=".xlsx,.xls" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 
-                       focus:ring-green-500 focus:border-green-500 outline-none">
+                   focus:ring-green-500 focus:border-green-500 outline-none">
 
                 <div class="mt-6 flex justify-end space-x-3">
                     <!-- Cancel -->
@@ -131,5 +144,21 @@
 
     </div>
 
+    <script>
+        const form = document.getElementById('import-form');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const modal = document.getElementById('import-modal');
+
+        form.addEventListener('submit', function(e) {
+            // Show loading overlay
+            loadingOverlay.classList.remove('hidden');
+
+            // Disable the whole modal
+            modal.classList.add('pointer-events-none', 'opacity-70');
+
+            // Optionally, disable page scrolling
+            document.body.classList.add('overflow-hidden');
+        });
+    </script>
 
 </x-layout>

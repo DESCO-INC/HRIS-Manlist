@@ -577,7 +577,8 @@ class ManlistController extends Controller
             // Prepare batch data
             // ---------------------------------------------------------
             for ($i = 1; $i < count($rows); $i++) {
-                $row = array_combine($fileHeaders, array_map(fn($v) => $v ?? '', $rows[$i]));
+                // Convert empty cells or whitespace-only cells to null
+                $row = array_combine($fileHeaders, array_map(fn($v) => trim($v) === '' ? null : $v, $rows[$i]));
 
                 if (empty($row['EMP_NUMBER'])) {
                     continue;
@@ -585,64 +586,71 @@ class ManlistController extends Controller
 
                 $validRowIndexes[] = $i;
 
+                // ---------------------------------------------------------
+                // Manlist data
+                // ---------------------------------------------------------
                 $manlistData[] = array_map($upper, [
                     'emp_number' => $row['EMP_NUMBER'], // required
                     'firstname' => $row['FIRSTNAME'], // required
                     'middlename' => $row['MIDDLENAME'], // required
                     'lastname' => $row['LASTNAME'], // required
-                    'suffix' => !empty($row['SUFFIX']) ? $row['SUFFIX'] : null,
+                    'suffix' => $row['SUFFIX'],
                     'position' => $row['POSITION'], // required
                     'department' => $row['DEPARTMENT'], // required
-                    'emp_classification' => !empty($row['EMP_CLASSIFICATION']) ? $row['EMP_CLASSIFICATION'] : null,
-                    'emp_status' => !empty($row['EMP_STATUS']) ? $row['EMP_STATUS'] : null,
-                    'datehired' => !empty($row['DATEHIRED']) ? $convertDate($row['DATEHIRED']) : null,
-                    'workbase' => !empty($row['WORKBASE']) ? $row['WORKBASE'] : null,
-                    'temporary_workbase' => !empty($row['TEMPORARY_WORKBASE']) ? $row['TEMPORARY_WORKBASE'] : null,
-                    'project_assigned' => !empty($row['PROJECT_ASSIGNED']) ? $row['PROJECT_ASSIGNED'] : null,
-                    'project_hired' => !empty($row['PROJECT_HIRED']) ? $convertDate($row['PROJECT_HIRED']) : null,
-                    'contract_expiration' => !empty($row['CONTRACT_EXPIRATION']) ? $convertDate($row['CONTRACT_EXPIRATION']) : null,
-                    'probitionary_date' => !empty($row['PROBITIONARY_DATE']) ? $convertDate($row['PROBITIONARY_DATE']) : null,
-                    'regularization_date' => !empty($row['REGULARIZATION_DATE']) ? $convertDate($row['REGULARIZATION_DATE']) : null,
-                    'seperation_date' => !empty($row['SEPERATION_DATE']) ? $convertDate($row['SEPERATION_DATE']) : null,
-                    'seperation_reason' => !empty($row['SEPERATION_REASON']) ? $row['SEPERATION_REASON'] : null,
-                    'remarks' => !empty($row['REMARKS']) ? $row['REMARKS'] : null,
+                    'emp_classification' => $row['EMP_CLASSIFICATION'],
+                    'emp_status' => $row['EMP_STATUS'],
+                    'datehired' => $row['DATEHIRED'] ? $convertDate($row['DATEHIRED']) : null,
+                    'workbase' => $row['WORKBASE'],
+                    'temporary_workbase' => $row['TEMPORARY_WORKBASE'],
+                    'project_assigned' => $row['PROJECT_ASSIGNED'],
+                    'project_hired' => $row['PROJECT_HIRED'] ? $convertDate($row['PROJECT_HIRED']) : null,
+                    'contract_expiration' => $row['CONTRACT_EXPIRATION'] ? $convertDate($row['CONTRACT_EXPIRATION']) : null,
+                    'probitionary_date' => $row['PROBITIONARY_DATE'] ? $convertDate($row['PROBITIONARY_DATE']) : null,
+                    'regularization_date' => $row['REGULARIZATION_DATE'] ? $convertDate($row['REGULARIZATION_DATE']) : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
 
+                // ---------------------------------------------------------
+                // Personal info
+                // ---------------------------------------------------------
                 $personalData[] = array_map($upper, [
-                    'birthdate' => !empty($row['BIRTHDATE']) ? $convertDate($row['BIRTHDATE']) : null,
-                    'gender' => !empty($row['GENDER']) ? $row['GENDER'] : null,
-                    'civil_status' => !empty($row['CIVIL_STATUS']) ? $row['CIVIL_STATUS'] : null,
-                    'educational_attainment' => !empty($row['EDUCATIONAL_ATTAINMENT']) ? $row['EDUCATIONAL_ATTAINMENT'] : null,
-                    'school' => !empty($row['SCHOOL']) ? $row['SCHOOL'] : null,
-                    'course' => !empty($row['COURSE']) ? $row['COURSE'] : null,
-                    'professional_licensure' => !empty($row['PROFESSIONAL_LICENSURE']) ? $row['PROFESSIONAL_LICENSURE'] : null,
-                    'phone_number' => !empty($row['PHONE_NUMBER']) ? $row['PHONE_NUMBER'] : null,
-                    'email_address' => !empty($row['EMAIL_ADDRESS']) ? $row['EMAIL_ADDRESS'] : null,
-                    'province' => !empty($row['PROVINCE']) ? $row['PROVINCE'] : null,
-                    'municipality' => !empty($row['MUNICIPALITY']) ? $row['MUNICIPALITY'] : null,
-                    'barangay' => !empty($row['BARANGAY']) ? $row['BARANGAY'] : null,
-                    'blood_type' => !empty($row['BLOOD_TYPE']) ? $row['BLOOD_TYPE'] : null,
-                    'address' => !empty($row['ADDRESS']) ? $row['ADDRESS'] : null,
-                    'tin_number' => !empty($row['TIN_NUMBER']) ? $row['TIN_NUMBER'] : null,
-                    'sss_number' => !empty($row['SSS_NUMBER']) ? $row['SSS_NUMBER'] : null,
-                    'philhealth_number' => !empty($row['PHILHEALTH_NUMBER']) ? $row['PHILHEALTH_NUMBER'] : null,
-                    'pagibig_number' => !empty($row['PAGIBIG_NUMBER']) ? $row['PAGIBIG_NUMBER'] : null,
+                    'birthdate' => $row['BIRTHDATE'] ? $convertDate($row['BIRTHDATE']) : null,
+                    'gender' => $row['GENDER'],
+                    'civil_status' => $row['CIVIL_STATUS'],
+                    'educational_attainment' => $row['EDUCATIONAL_ATTAINMENT'],
+                    'school' => $row['SCHOOL'],
+                    'course' => $row['COURSE'],
+                    'professional_licensure' => $row['PROFESSIONAL_LICENSURE'],
+                    'phone_number' => $row['PHONE_NUMBER'],
+                    'email_address' => $row['EMAIL_ADDRESS'],
+                    'province' => $row['PROVINCE'],
+                    'municipality' => $row['MUNICIPALITY'],
+                    'barangay' => $row['BARANGAY'],
+                    'blood_type' => $row['BLOOD_TYPE'],
+                    'address' => $row['ADDRESS'],
+                    'tin_number' => $row['TIN_NUMBER'],
+                    'sss_number' => $row['SSS_NUMBER'],
+                    'philhealth_number' => $row['PHILHEALTH_NUMBER'],
+                    'pagibig_number' => $row['PAGIBIG_NUMBER'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
 
+                // ---------------------------------------------------------
                 // Contact
+                // ---------------------------------------------------------
                 $contactData[] = array_map($upper, [
-                    'contact_person' => !empty($row['CONTACT_PERSON']) ? $row['CONTACT_PERSON'] : null,
-                    'relationship' => !empty($row['RELATIONSHIP']) ? $row['RELATIONSHIP'] : null,
-                    'contact_number' => !empty($row['CONTACT_NUMBER']) ? $row['CONTACT_NUMBER'] : null,
+                    'contact_person' => $row['CONTACT_PERSON'],
+                    'relationship' => $row['RELATIONSHIP'],
+                    'contact_number' => $row['CONTACT_NUMBER'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
 
+                // ---------------------------------------------------------
                 // Leave
+                // ---------------------------------------------------------
                 $leaveData[] = [
                     'SIL' => $row['SIL'] ?? 0,
                     'SL' => $row['SL'] ?? 0,
@@ -651,7 +659,9 @@ class ManlistController extends Controller
                     'updated_at' => now(),
                 ];
 
+                // ---------------------------------------------------------
                 // Compensation
+                // ---------------------------------------------------------
                 $compData[] = [
                     'daily_rate' => $row['DAILY_RATE'] ?? 0,
                     'monthly_rate' => $row['MONTHLY_RATE'] ?? 0,
@@ -712,8 +722,9 @@ class ManlistController extends Controller
             DB::commit();
             return back()->with('success', 'Excel data imported successfully!');
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
-            return back()->with('error', 'Excel data imported failed, please check the file format or the contents');
+            return back()->with('error', 'Excel data import failed: ' . $e->getMessage());
         }
     }
 }

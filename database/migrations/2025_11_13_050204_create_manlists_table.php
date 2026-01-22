@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('emp_number')->unique();
             $table->string('firstname');
-            $table->string('middlename');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->string('suffix')->nullable();
-            $table->string('position');
-            $table->string('department');
+            $table->string('position')->nullable();
+            $table->string('department')->nullable();
             $table->string('emp_classification')->nullable();
             $table->string('emp_status')->nullable();
             $table->date('datehired')->nullable();
