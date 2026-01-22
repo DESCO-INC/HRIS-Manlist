@@ -4,7 +4,7 @@
             <div class="relative flex flex-col my-6 bg-white shadow-xl border border-slate-200 rounded-lg w-96">
                 <div class="p-4">
                     <div class="flex flex-col items-center">
-                        <p class="text-2xl font-bold text-green-500">DESCO</p>
+                        <p class="text-2xl font-bold text-green-500">DESCOs</p>
                         <p class="text-3xl font-bold text-green-500 mb-5">HRIS MANLIST</p>
                     </div>
                     <form method="POST" action="{{ url('/login') }}">
