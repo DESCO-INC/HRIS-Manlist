@@ -752,8 +752,7 @@
                     <!-- SIL -->
                     <div>
                         <label for="SIL" class="block mb-1 font-medium text-green-500">SIL Balance</label>
-                        <input type="number" id="SIL" name="SIL"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="SIL" name="SIL" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->leaveIncentive->SIL }}">
                         @error('SIL')
@@ -764,8 +763,7 @@
                     <!-- SL -->
                     <div>
                         <label for="SL" class="block mb-1 font-medium text-green-500">SL Balance</label>
-                        <input type="number" id="SL" name="SL"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="SL" name="SL" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->leaveIncentive->SL }}">
                         @error('SL')
@@ -776,8 +774,7 @@
                     <!-- VL -->
                     <div>
                         <label for="VL" class="block mb-1 font-medium text-green-500">VL Balance</label>
-                        <input type="number" id="VL" name="VL"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="VL" name="VL" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->leaveIncentive->VL }}">
                         @error('VL')
@@ -801,7 +798,7 @@
 
                     <div>
                         <label for="daily_rate" class="block mb-1 font-medium text-green-500">Daily Rate</label>
-                        <input type="number" id="daily_rate" name="daily_rate"
+                        <input type="number" id="daily_rate" name="daily_rate" step="0.01"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->daily_rate }}">
@@ -812,8 +809,7 @@
 
                     <div>
                         <label for="monthly_rate" class="block mb-1 font-medium text-green-500">Monthly Rate</label>
-                        <input type="number" id="monthly_rate" name="monthly_rate"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="monthly_rate" name="monthly_rate" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->monthly_rate }}">
                         @error('monthly_rate')
@@ -823,8 +819,7 @@
 
                     <div>
                         <label for="meal_subsidy" class="block mb-1 font-medium text-green-500">Meal Subsidy</label>
-                        <input type="number" id="meal_subsidy" name="meal_subsidy"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="meal_subsidy" name="meal_subsidy" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->meal_subsidy }}">
                         @error('meal_subsidy')
@@ -835,8 +830,7 @@
                     <div>
                         <label for="meal_allowance" class="block mb-1 font-medium text-green-500">Meal
                             Allowance</label>
-                        <input type="number" id="meal_allowance" name="meal_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="meal_allowance" name="meal_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->meal_allowance }}">
                         @error('meal_allowance')
@@ -846,8 +840,7 @@
 
                     <div>
                         <label for="rice_subsidy" class="block mb-1 font-medium text-green-500">Rice Subsidy</label>
-                        <input type="number" id="rice_subsidy" name="rice_subsidy"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="rice_subsidy" name="rice_subsidy" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->rice_subsidy }}">
                         @error('rice_subsidy')
@@ -857,8 +850,7 @@
 
                     <div>
                         <label for="spa_allowance" class="block mb-1 font-medium text-green-500">SPA Allowance</label>
-                        <input type="number" id="spa_allowance" name="spa_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="spa_allowance" name="spa_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->spa_allowance }}">
                         @error('spa_allowance')
@@ -869,8 +861,7 @@
                     <div>
                         <label for="transpo_assistance" class="block mb-1 font-medium text-green-500">Transport
                             Assistance</label>
-                        <input type="number" id="transpo_assistance" name="transpo_assistance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="transpo_assistance" name="transpo_assistance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->transpo_assistance }}">
                         @error('transpo_assistance')
@@ -881,8 +872,7 @@
                     <div>
                         <label for="clothing_allowance" class="block mb-1 font-medium text-green-500">Clothing
                             Allowance</label>
-                        <input type="number" id="clothing_allowance" name="clothing_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="clothing_allowance" name="clothing_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->clothing_allowance }}">
                         @error('clothing_allowance')
@@ -893,8 +883,7 @@
                     <div>
                         <label for="transpo_allowance" class="block mb-1 font-medium text-green-500">Transport
                             Allowance</label>
-                        <input type="number" id="transpo_allowance" name="transpo_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="transpo_allowance" name="transpo_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->transpo_allowance }}">
                         @error('transpo_allowance')
@@ -906,8 +895,7 @@
                         <label for="communication_allowance"
                             class="block mb-1 font-medium text-green-500">Communication
                             Allowance</label>
-                        <input type="number" id="communication_allowance" name="communication_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="communication_allowance" name="communication_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->communication_allowance }}">
                         @error('communication_allowance')
@@ -918,8 +906,7 @@
                     <div>
                         <label for="project_allowance" class="block mb-1 font-medium text-green-500">Project
                             Allowance</label>
-                        <input type="number" id="project_allowance" name="project_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="project_allowance" name="project_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->project_allowance }}">
                         @error('project_allowance')
@@ -930,8 +917,7 @@
                     <div>
                         <label for="technical_allowance" class="block mb-1 font-medium text-green-500">Technical
                             Allowance</label>
-                        <input type="number" id="technical_allowance" name="technical_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="technical_allowance" name="technical_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->technical_allowance }}">
                         @error('technical_allowance')
@@ -942,8 +928,7 @@
                     <div>
                         <label for="positional_allowance" class="block mb-1 font-medium text-green-500">Positional
                             Allowance</label>
-                        <input type="number" id="positional_allowance" name="positional_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="positional_allowance" name="positional_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->positional_allowance }}">
                         @error('positional_allowance')
@@ -954,8 +939,7 @@
                     <div>
                         <label for="professional_allowance" class="block mb-1 font-medium text-green-500">Professional
                             Allowance</label>
-                        <input type="number" id="professional_allowance" name="professional_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="professional_allowance" name="professional_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->professional_allowance }}">
                         @error('professional_allowance')
@@ -966,8 +950,7 @@
                     <div>
                         <label for="housing_allowance" class="block mb-1 font-medium text-green-500">Housing
                             Allowance</label>
-                        <input type="number" id="housing_allowance" name="housing_allowance"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md
+                        <input type="number" id="housing_allowance" name="housing_allowance" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md
                 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                             value="{{ $manlistEntry->compensation->housing_allowance }}">
                         @error('housing_allowance')
