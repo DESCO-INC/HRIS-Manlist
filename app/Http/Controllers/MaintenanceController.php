@@ -113,8 +113,8 @@ class MaintenanceController extends Controller
     public function store_deptList(Request $request)
     {
         $validated = $request->validate([
-            'code' => 'required|string|max:255|unique:department_list,code',
-            'name' => 'required|string|max:255|unique:department_list,name',
+            'code' => 'required|string|max:255|unique:department_lists,code',
+            'name' => 'required|string|max:255|unique:department_lists,name',
             'description' => 'required|string|max:255',
             'modal' => 'required|string',
         ]);
