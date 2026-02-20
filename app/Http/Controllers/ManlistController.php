@@ -279,6 +279,9 @@ class ManlistController extends Controller
             'contract_expiration' => 'nullable|date',
             'probitionary_date' => 'nullable|date',
             'regularization_date' => 'nullable|date',
+            'seperation_date' => 'nullable|date',
+            'seperation_reason' => 'nullable',
+            'remarks' => 'nullable',
 
             // Personal Info
             'birthdate' => 'required|date',
@@ -347,6 +350,9 @@ class ManlistController extends Controller
             'contract_expiration' => $validated['contract_expiration'],
             'probitionary_date' => $validated['probitionary_date'],
             'regularization_date' => $validated['regularization_date'],
+            'seperation_date' => $validated['seperation_date'],
+            'seperation_reason' => $validated['seperation_reason'],
+            'remarks' => $validated['remarks'],
         ]);
 
         // Update Relationships
