@@ -302,6 +302,7 @@
                         <option value="">Select Options</option>
                         <option value="ELEMENTARY GRADUATE">ELEMENTARY GRADUATE</option>
                         <option value="HIGH SCHOOL GRADUATE">HIGH SCHOOL GRADUATE</option>
+                        <option value="SENIOR HIGH SCHOOL GRADUATE">SENIOR HIGH SCHOOL GRADUATE</option>
                         <option value="VOCATIONAL">VOCATIONAL</option>
                         <option value="COLLEGE UNDERGRADUATE">COLLEGE UNDERGRADUATE</option>
                         <option value="COLLEGE GRADUATE">COLLEGE GRADUATE</option>
