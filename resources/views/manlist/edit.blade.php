@@ -458,6 +458,9 @@
                             <option value="ELEMENTARY GRADUATE"
                                 {{ $manlistEntry->personalInfo->educational_attainment == 'ELEMENTARY GRADUATE' ? 'selected' : '' }}>
                                 ELEMENTARY GRADUATE</option>
+                            <option value="HIGH SCHOOL UNDERGRADUATE"
+                                {{ $manlistEntry->personalInfo->educational_attainment == 'HIGH SCHOOL UNDERGRADUATE' ? 'selected' : '' }}>
+                                HIGH SCHOOL UNDERGRADUATE</option>
                             <option value="HIGH SCHOOL GRADUATE"
                                 {{ $manlistEntry->personalInfo->educational_attainment == 'HIGH SCHOOL GRADUATE' ? 'selected' : '' }}>
                                 HIGH SCHOOL GRADUATE</option>

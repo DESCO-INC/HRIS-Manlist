@@ -301,6 +301,7 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                         <option value="">Select Options</option>
                         <option value="ELEMENTARY GRADUATE">ELEMENTARY GRADUATE</option>
+                        <option value="HIGH SCHOOL UNDERGRADUATE">HIGH SCHOOL UNDERGRADUATE</option>
                         <option value="HIGH SCHOOL GRADUATE">HIGH SCHOOL GRADUATE</option>
                         <option value="SENIOR HIGH SCHOOL GRADUATE">SENIOR HIGH SCHOOL GRADUATE</option>
                         <option value="VOCATIONAL">VOCATIONAL</option>
